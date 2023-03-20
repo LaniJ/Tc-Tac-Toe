@@ -1,0 +1,17 @@
+.square {
+  width: 10rem;
+  height: 10rem;
+  border: 1px solid #03d4bc;
+  background-color: #03d4bc;
+  font-size: 6rem;
+  color: #fbfbc8;
+}
+
+.square:hover {
+  /* background-color: aquamarine; */
+  cursor: pointer;
+  /* background-color: #03d4bc82; */
+  background-color: rgba(108, 174, 144, 0.9);
+  border: 1px solid rgba(108, 174, 144, 0.9);
+
+}
