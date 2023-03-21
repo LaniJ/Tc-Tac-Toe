@@ -1,10 +1,12 @@
-import { useState } from 'react'
+// import { useState } from 'react'
 import Square from '../Square/square'
 
-const Board = () => {
-  const [squares, setSquares] = useState(new Array(9).fill(null));
-  const [xIsNext, setXIsNext] = useState(true);
+const Board = ({ xIsNext, onPlay, squares, onRestart, checkWinner }) => {
 
+  // const [squares, setSquares] = useState(new Array(9).fill(null));
+  // const [xIsNext, setXIsNext] = useState(true);
+
+  // console.log('winner', winner)
   const calculateWinner = (squares) => {
     const lines = [
       [0, 1, 2],
@@ -21,6 +23,7 @@ const Board = () => {
       const [a, b, c] = lines[i];
       if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
         console.log('in calc squ ', squares[a], squares[b], squares[c])
+        checkWinner(squares[a])
         return squares[a];
       }
     }
@@ -28,13 +31,10 @@ const Board = () => {
   }
   
   const handleRestart = () => {
-    setXIsNext(true);
-    setSquares(new Array(9).fill(null));
+    onRestart();
   }
 
-
   const handleClick = (index) => {
-    // console.log('clicked', squares[index]);
 
     if (squares[index] || calculateWinner(squares)) {
       return;
@@ -43,29 +43,26 @@ const Board = () => {
     const nextSquares = squares.slice();
     nextSquares[index] = xIsNext ? 'X' : 'O';
     
-    console.log('clicked after', squares);
+    // setSquares(nextSquares);
+    // setXIsNext(!xIsNext);
 
-    setSquares(nextSquares);
-    setXIsNext(!xIsNext);
+    onPlay(nextSquares);
   };
+  
+  // const winner = calculateWinner(squares);
+  // console.log('winner here', winner)
 
-  const winner = calculateWinner(squares);
+  // let status;
 
-  let status;
-
-  if (winner) {
-    console.log('winner', winner)
-    status = `${winner} wins!` 
-  } else {
-    status = `Next player: ${xIsNext? 'X' : 'O'}`
-  }
+  // if (winner) {
+  //   console.log('winner', winner)
+  //   status = `${winner} wins!` 
+  // } else {
+  //   status = `Next player: ${xIsNext? 'X' : 'O'}`
+  // }
 
   return ( 
     <div className='container'>
-      <h1 className='game-name'>Tic-Tac-Toe</h1>
-
-      <p className='player-info'>{status}</p>
-
       <div className='board'>
         <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
         <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
@@ -80,8 +77,6 @@ const Board = () => {
       <button className='restart-btn' onClick={handleRestart}>Restart Game</button>
     </div>
   )
-
-  
 }
 
 export default Board;
