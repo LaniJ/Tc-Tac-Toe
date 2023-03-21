@@ -1,15 +1,19 @@
 import { useState } from 'react';
 import Board from '../Board/Board';
-import History from '../History/History'
+import History from '../History/History';
+import Confetti from '../Confetti/Confetti';
 
 const Game = () => {
   const [xIsNext, setXIsNext] = useState(true);
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
   const [winner, setWinner] = useState(null)
+  const [showConfetti, setShowConfetti] = useState(true);
+  
   const currentSquares = history[currentMove];
 
   const restartGame = () => {
+    setShowConfetti(false);
     setXIsNext(true);
     setCurrentMove(0);
     setWinner(null);
@@ -20,6 +24,13 @@ const Game = () => {
     console.log('winner', winner)
     setWinner(val)
   }
+  // const handleWin = () => {
+  //   setShowConfetti(true);
+
+  //   setTimeout(() => {
+  //     setShowConfetti(false);
+  //   }, timeout);
+  // }
   
   const handlePlay = (nextSquares) => {
     // console.log('nextSquares ', nextSquares);
@@ -64,7 +75,7 @@ const Game = () => {
           <History history={history} jumpToMove={jumpToMove}/>
         {/* </div> */}
       </div>
-
+      <Confetti showConfetti={showConfetti}/>
     </div>
     );
 }

@@ -58,8 +58,6 @@
   border: none;
   border-radius: 8px;
   margin-bottom: 20px;
-  /* font-family: 'Finger Paint', cursive; */
-
 }
 .restart-btn:hover {
   background-color: #03d4bc;
@@ -106,4 +104,53 @@
 .history-btn:hover {
   background: #05b5a0;
   color: #000000;
+}
+.box {
+  animation: fade-in 0.5s ease-in;
+  /* background: crimson; */
+  /* color: white; */
+  /* padding: 5px 10px; */
+  /* width: fit-content; */
+}
+
+@media screen and (max-width: 768px) {
+  .game-name {
+    font-size: 5rem;
+  }
+  .player-info {
+    font-size: 2.7rem;
+    margin-top: 2rem;
+    /* margin-bottom: 50px; */
+  }
+  .restart-btn {
+    color: #000000;
+  }
+
+  .game-history {
+    position: relative;
+    margin-top: 5rem;
+    color: #03d4bc;
+    padding-bottom: 5rem;
+  }
+  .history-btn {
+    /* padding: 8px 0;
+    width: 180px;
+    color: #000000; */
+    background-color: #05b5a0;
+    color: #000000;
+    font-size: 1.6rem;
+    padding: 1.6rem;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #282c34;
+    transition: all 0.3s ease-out;
+  }
+  .history-btn:hover {
+    background: #05b5a0;
+  }
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }

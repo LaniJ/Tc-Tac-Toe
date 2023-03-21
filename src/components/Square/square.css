@@ -13,5 +13,11 @@
   /* background-color: #03d4bc82; */
   background-color: rgba(108, 174, 144, 0.9);
   border: 1px solid rgba(108, 174, 144, 0.9);
+}
 
+@media screen and (max-width: 768px) {
+  .square:hover {
+    background-color: #03d4bc;
+    border: 1px solid #03d4bc;
+  }
 }

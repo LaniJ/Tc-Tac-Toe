@@ -35,7 +35,7 @@ const History = ({ history, jumpToMove }) => {
       <button className='history-btn' onClick={toggleHistory}>Show move history</button>
 
       {showHistory &&
-        <ul>
+        <ul className='box'>
           {pastMoves}
         </ul>
       }
