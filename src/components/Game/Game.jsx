@@ -10,17 +10,17 @@ const Game = () => {
   const currentSquares = history[currentMove];
 
   const restartGame = () => {
-    console.log('restarting');
     setXIsNext(true);
-    const newArray = Array(9).fill(null);
-    console.log(newArray)
-    setHistory([...newArray])
+    setCurrentMove(0);
+    setWinner(null);
+    setHistory([Array(9).fill(null)]);
   }
 
   const onWinner = (val) => {
     console.log('winner', winner)
     setWinner(val)
   }
+  
   const handlePlay = (nextSquares) => {
     // console.log('nextSquares ', nextSquares);
     const updatedHistory = [...history.slice(0, currentMove + 1), nextSquares];
@@ -29,11 +29,6 @@ const Game = () => {
     setXIsNext(!xIsNext);
     // console.log('gamee -->> ', nextSquares, winner)
   }
-
-  // function handlePlay(nextSquares) {
-  //   setHistory([...history, nextSquares]);
-  //   setXIsNext(!xIsNext);
-  // }
 
   const jumpToMove = (move) => {
     console.log('moveing ', move)
@@ -53,12 +48,6 @@ const Game = () => {
     status = `Next player: ${xIsNext? 'X' : 'O'}`
   }
 
-  // const pastMoves = history.map((item, index) => {
-  //   return (
-  //     <button>{item}</button>
-  //   )
-  // })
-
   return (
     <div className="game">
       <h1 className='game-name'>Tic-Tac-Toe</h1>
@@ -66,7 +55,12 @@ const Game = () => {
 
       <div className='game-body'>
         {/* <div className='flex'> */}
-          <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} onRestart={restartGame}  checkWinner={onWinner}/> 
+          <Board
+            xIsNext={xIsNext} 
+            squares={currentSquares} 
+            onPlay={handlePlay} 
+            onRestart={restartGame}  
+            checkWinner={onWinner}/> 
           <History history={history} jumpToMove={jumpToMove}/>
         {/* </div> */}
       </div>
