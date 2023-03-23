@@ -1,9 +1,9 @@
 import './square.css';
 
 
-const Square = ({ value, onSquareClick }) => {
+const Square = ({ value, onSquareClick, winningSquare }) => {
   return ( 
-    <button className="square" onClick={onSquareClick}>{value}</button>
+    <button className={`square ${ winningSquare ? 'winning-squ' : ''}`} onClick={onSquareClick}>{value}</button>
    );
 }
  

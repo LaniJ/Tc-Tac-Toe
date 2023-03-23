@@ -8,7 +8,8 @@ const Game = () => {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
   const [winner, setWinner] = useState(null)
-  const [showConfetti, setShowConfetti] = useState(true);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
   
   const currentSquares = history[currentMove];
 
@@ -17,43 +18,31 @@ const Game = () => {
     setXIsNext(true);
     setCurrentMove(0);
     setWinner(null);
+    setGameOver(false);
     setHistory([Array(9).fill(null)]);
   }
 
-  const onWinner = (val) => {
-    console.log('winner', winner)
-    setWinner(val)
+  const checkWinner = (val, gameStatus) => {
+    setGameOver(gameStatus);
+    setWinner(val);
+    setShowConfetti(true);
   }
-  // const handleWin = () => {
-  //   setShowConfetti(true);
-
-  //   setTimeout(() => {
-  //     setShowConfetti(false);
-  //   }, timeout);
-  // }
   
   const handlePlay = (nextSquares) => {
-    // console.log('nextSquares ', nextSquares);
     const updatedHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(updatedHistory);
     setCurrentMove(updatedHistory.length - 1);
     setXIsNext(!xIsNext);
-    // console.log('gamee -->> ', nextSquares, winner)
   }
 
   const jumpToMove = (move) => {
-    console.log('moveing ', move)
     setCurrentMove(move);
     setXIsNext( move % 2 === 0);
   }
 
-  // const winner = calculateWinner(currentSquares);
-  // let winner;
-
   let status;
 
   if (winner) {
-    console.log('winner', winner)
     status = `${winner} wins!` 
   } else {
     status = `Next player: ${xIsNext? 'X' : 'O'}`
@@ -65,15 +54,19 @@ const Game = () => {
       <p className='player-info'>{status}</p>
 
       <div className='game-body'>
-        {/* <div className='flex'> */}
-          <Board
-            xIsNext={xIsNext} 
-            squares={currentSquares} 
-            onPlay={handlePlay} 
-            onRestart={restartGame}  
-            checkWinner={onWinner}/> 
-          <History history={history} jumpToMove={jumpToMove}/>
-        {/* </div> */}
+        <Board
+          xIsNext={xIsNext}
+          gameOver={gameOver} 
+          squares={currentSquares} 
+          onPlay={handlePlay} 
+          onRestart={restartGame}  
+          onWinner={checkWinner}
+        /> 
+        <History
+          history={history}
+          jumpToMove={jumpToMove}
+          currentMove={currentMove}
+        />
       </div>
       <Confetti showConfetti={showConfetti}/>
     </div>

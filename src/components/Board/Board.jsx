@@ -1,12 +1,11 @@
 // import { useState } from 'react'
+import { useState } from 'react'
 import Square from '../Square/square'
 
-const Board = ({ xIsNext, onPlay, squares, onRestart, checkWinner }) => {
+const Board = ({ xIsNext, gameOver, onPlay, squares, onRestart, onWinner }) => {
 
-  // const [squares, setSquares] = useState(new Array(9).fill(null));
-  // const [xIsNext, setXIsNext] = useState(true);
+  const [arr, setArr] = useState([]);
 
-  // console.log('winner', winner)
   const calculateWinner = (squares) => {
     const lines = [
       [0, 1, 2],
@@ -22,59 +21,83 @@ const Board = ({ xIsNext, onPlay, squares, onRestart, checkWinner }) => {
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i];
       if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-        console.log('in calc squ ', squares[a], squares[b], squares[c])
-        checkWinner(squares[a])
-        return squares[a];
+        setArr(lines[i]);
+        onWinner(squares[a], true);
+        return;
       }
     }
     return null;
   }
   
   const handleRestart = () => {
+    setArr([]);
     onRestart();
   }
 
   const handleClick = (index) => {
-
-    if (squares[index] || calculateWinner(squares)) {
+    if (squares[index] || gameOver) {
       return;
     }
-    
+
     const nextSquares = squares.slice();
     nextSquares[index] = xIsNext ? 'X' : 'O';
-    
-    // setSquares(nextSquares);
-    // setXIsNext(!xIsNext);
-
+    calculateWinner(nextSquares);
     onPlay(nextSquares);
   };
   
-  // const winner = calculateWinner(squares);
-  // console.log('winner here', winner)
-
-  // let status;
-
-  // if (winner) {
-  //   console.log('winner', winner)
-  //   status = `${winner} wins!` 
-  // } else {
-  //   status = `Next player: ${xIsNext? 'X' : 'O'}`
-  // }
 
   return ( 
     <div className='container'>
       <div className='board'>
-        <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
-        <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
-        <Square value={squares[2]} onSquareClick={() => handleClick(2)} />
-        <Square value={squares[3]} onSquareClick={() => handleClick(3)} />
-        <Square value={squares[4]} onSquareClick={() => handleClick(4)} />
-        <Square value={squares[5]} onSquareClick={() => handleClick(5)} />
-        <Square value={squares[6]} onSquareClick={() => handleClick(6)} />
-        <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
-        <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
+        <Square
+          winningSquare={arr.includes(0)} 
+          value={squares[0]} 
+          onSquareClick={() => handleClick(0)} 
+        />
+        <Square 
+          winningSquare={arr.includes(1)}
+          value={squares[1]} 
+          onSquareClick={() => handleClick(1)} 
+        />
+        <Square 
+          winningSquare={arr.includes(2)}
+          value={squares[2]} 
+          onSquareClick={() => handleClick(2)} 
+        />
+        <Square 
+          winningSquare={arr.includes(3)}
+          value={squares[3]} 
+          onSquareClick={() => handleClick(3)} 
+        />
+        <Square 
+          winningSquare={arr.includes(4)}
+          value={squares[4]} 
+          onSquareClick={() => handleClick(4)} 
+        />
+        <Square 
+          winningSquare={arr.includes(5)}
+          value={squares[5]} 
+          onSquareClick={() => handleClick(5)} 
+      />
+        <Square 
+          winningSquare={arr.includes(6)}
+          value={squares[6]} 
+          onSquareClick={() => handleClick(6)} 
+        />
+        <Square 
+          winningSquare={arr.includes(7)}
+          value={squares[7]} 
+          onSquareClick={() => handleClick(7)} 
+        />
+        <Square 
+          winningSquare={arr.includes(8)}
+          value={squares[8]} 
+          onSquareClick={() => handleClick(8)} 
+        />
       </div>
-      <button className='restart-btn' onClick={handleRestart}>Restart Game</button>
+      <button className='restart-btn' onClick={handleRestart}>
+        Restart Game
+      </button>
     </div>
   )
 }
