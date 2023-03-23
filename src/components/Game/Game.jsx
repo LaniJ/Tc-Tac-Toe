@@ -42,8 +42,10 @@ const Game = () => {
 
   let status;
 
-  if (winner) {
-    status = `${winner} wins!` 
+  if (!winner && history.length > 9) {
+    status = "It's a draw! 😓"
+  } else if (winner) {
+    status = `${winner} wins! 🥳` 
   } else {
     status = `Next player: ${xIsNext? 'X' : 'O'}`
   }
