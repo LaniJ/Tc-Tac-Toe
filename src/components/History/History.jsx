@@ -1,14 +1,12 @@
 import { useState } from 'react';
-const History = ({ history, jumpToMove }) => {
+const History = ({ history, jumpToMove, currentMove }) => {
   const [showHistory, setShowHistory] = useState(false);
 
-  // console.log('history', history)
   
   const toggleHistory = () => {
     setShowHistory(!showHistory);
   }
   const jumpToPrev = (move) => {
-    console.log('index val', move)
     jumpToMove(move);
   }
 
@@ -16,11 +14,14 @@ const History = ({ history, jumpToMove }) => {
 
     let description;
 
-    if (index > 0) {
+    if (index > 0 && index !== currentMove) {
       description = `Go to move ${index}`
+    } else if (index !== 0 && index === currentMove) {
+      description = 'You are at move #' + index 
     } else {
       description = 'Go to game start'
     }
+
     return (
       <li key={index}>
         <button className='history-btn' onClick={() => jumpToPrev(index)}>
